@@ -25,7 +25,6 @@ class Endereco {
     estado: json["estado"]
 
    );
-
   }
 }
 

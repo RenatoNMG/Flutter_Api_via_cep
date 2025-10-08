@@ -1,6 +1,5 @@
 import 'package:cosumodeapi/Models/endereco.dart';
 import 'package:cosumodeapi/Services/via_cep_service.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -31,35 +30,62 @@ class _MyHomePageState extends State<MyHomePage> {
   TextEditingController controllerEstado = TextEditingController();
   Endereco? endereco; // variavel pode sreceber null;
 
+  bool isLoading = false;
+
   ViaCepService viaCepService = ViaCepService();
 
   Future<void> buscarCep(String cep) async {
-    Endereco? response = await viaCepService.buscarEndereco(cep);
-
-    if (response?.localidade == null) {
-      showDialog(
-        context: context,
-        builder: (context) {
-          return AlertDialog(
-            icon: Icon(Icons.warning),
-            title: Text("Atenção"),
-            content: Text("Cep Não Encontrado"),
-          );
-        },
-      );
-      return;
-    }
+    clearController();
     setState(() {
-      endereco = response;
+      isLoading = true;
     });
+    try {
+      Endereco? response = await viaCepService.buscarEndereco(cep);
+
+      if (response?.localidade == null) {
+        showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              icon: Icon(Icons.warning),
+              title: Text("Atenção"),
+              content: Text("Cep Não Encontrado"),
+            );
+          },
+        );
+        controllerCep.clear();
+        return;
+      }
+      setState(() {
+        endereco = response;
+      });
+
+      setControllersCep(endereco!);
+    } catch (erro) {
+      throw Exception("Erro ao buscar CEP:  $erro");
+    } finally {
+      setState(() {
+        isLoading = false;
+      });
+    }
   }
 
   void setControllersCep(Endereco endereco) {
+    controllerCep.text = endereco.cep!;
     controllerLogradouro.text = endereco.logradouro!;
     controllerLocalidade.text = endereco.localidade!;
     controllerComplemento.text = endereco.complemento!;
     controllerUf.text = endereco.uf!;
     controllerEstado.text = endereco.estado!;
+  }
+
+  void clearController() {
+    controllerCep.clear();
+    controllerLogradouro.clear();
+    controllerLocalidade.clear();
+    controllerComplemento.clear();
+    controllerUf.clear();
+    controllerEstado.clear();
   }
 
   @override
@@ -70,75 +96,108 @@ class _MyHomePageState extends State<MyHomePage> {
 
         title: Text(widget.title),
       ),
+
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 30),
+
         child: Column(
           spacing: 20,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Center(
-              child: TextField(
-                controller: controllerCep,
-                maxLength: 8,
-                inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                keyboardType: TextInputType.number,
-                decoration: InputDecoration(
-                  suffixIcon: IconButton(
-                    onPressed: () {
-                      buscarCep(controllerCep.text);
-                    },
-                    icon: Icon(Icons.search),
-                  ),
-                  border: OutlineInputBorder(),
-                  labelText: "CEP",
-                ),
-              ),
-            ),
-            Center(
-              child: TextField(
-                controller: controllerLogradouro,
-                keyboardType: TextInputType.number,
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: "Logradouro",
-                ),
-              ),
-            ),
-            Center(
-              child: TextField(
-                controller: controllerLocalidade,
-                keyboardType: TextInputType.number,
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: "Localidade",
-                ),
-              ),
-            ),
             TextField(
-              controller: controllerComplemento,
+              onChanged: (value) {
+                print(value);
+                if (value.isEmpty) {
+                  clearController();
+                }
+              },
+              controller: controllerCep,
+              maxLength: 8,
+              inputFormatters: [FilteringTextInputFormatter.digitsOnly],
               keyboardType: TextInputType.number,
               decoration: InputDecoration(
+                suffixIcon: isLoading
+                    ? SizedBox(
+                        width: 10,
+                        height: 10,
+                        child: Padding(
+                          padding: const EdgeInsets.all(15.0),
+                          child: CircularProgressIndicator(),
+                        ),
+                      )
+                    : IconButton(
+                        onPressed: () {
+                          buscarCep(controllerCep.text);
+                        },
+                        icon: Icon(Icons.search),
+                      ),
                 border: OutlineInputBorder(),
-                labelText: "complemento",
+                labelText: "CEP",
               ),
             ),
 
-            TextField(
-              controller: controllerUf,
-              keyboardType: TextInputType.number,
-              decoration: InputDecoration(
-                border: OutlineInputBorder(),
-                labelText: "uf",
+            if (controllerLogradouro.text.isNotEmpty)
+              Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: TextField(
+                      controller: controllerLogradouro,
+                      keyboardType: TextInputType.number,
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(),
+                        labelText: "Logradouro",
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: TextField(
+                      controller: controllerLocalidade,
+                      keyboardType: TextInputType.number,
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(),
+                        labelText: "Localidade",
+                      ),
+                    ),
+                  ),
+
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: TextField(
+                      controller: controllerComplemento,
+                      keyboardType: TextInputType.number,
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(),
+                        labelText: "complemento",
+                      ),
+                    ),
+                  ),
+
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: TextField(
+                      controller: controllerUf,
+                      keyboardType: TextInputType.number,
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(),
+                        labelText: "uf",
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: TextField(
+                      controller: controllerEstado,
+                      keyboardType: TextInputType.number,
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(),
+                        labelText: "estado",
+                      ),
+                    ),
+                  ),
+                ],
               ),
-            ),
-            TextField(
-              controller: controllerEstado,
-              keyboardType: TextInputType.number,
-              decoration: InputDecoration(
-                border: OutlineInputBorder(),
-                labelText: "estado",
-              ),
-            ),
           ],
         ),
       ),
