@@ -139,7 +139,7 @@ class _MyHomePageState extends State<MyHomePage> {
             if (controllerLogradouro.text.isNotEmpty)
               Column(
                 children: [
-                  Padding(
+                
                     padding: const EdgeInsets.all(8.0),
                     child: TextField(
                       controller: controllerLogradouro,
@@ -149,8 +149,8 @@ class _MyHomePageState extends State<MyHomePage> {
                         labelText: "Logradouro",
                       ),
                     ),
-                  ),
-                  Padding(
+                
+                  
                     padding: const EdgeInsets.all(8.0),
                     child: TextField(
                       controller: controllerLocalidade,
@@ -160,9 +160,9 @@ class _MyHomePageState extends State<MyHomePage> {
                         labelText: "Localidade",
                       ),
                     ),
-                  ),
+                 
 
-                  Padding(
+                  
                     padding: const EdgeInsets.all(8.0),
                     child: TextField(
                       controller: controllerComplemento,
@@ -172,9 +172,9 @@ class _MyHomePageState extends State<MyHomePage> {
                         labelText: "complemento",
                       ),
                     ),
-                  ),
+                  
 
-                  Padding(
+            
                     padding: const EdgeInsets.all(8.0),
                     child: TextField(
                       controller: controllerUf,
@@ -184,8 +184,8 @@ class _MyHomePageState extends State<MyHomePage> {
                         labelText: "uf",
                       ),
                     ),
-                  ),
-                  Padding(
+                  
+                
                     padding: const EdgeInsets.all(8.0),
                     child: TextField(
                       controller: controllerEstado,
@@ -195,7 +195,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         labelText: "estado",
                       ),
                     ),
-                  ),
+                 
                 ],
               ),
           ],
