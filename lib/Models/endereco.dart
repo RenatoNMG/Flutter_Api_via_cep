@@ -26,6 +26,8 @@ class Endereco {
 
    );
   }
+
+    criarObjeto(){}
 }
 
     // {

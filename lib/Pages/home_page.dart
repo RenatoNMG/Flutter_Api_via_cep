@@ -136,10 +136,11 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
             ),
 
+            // ...existing code...
             if (controllerLogradouro.text.isNotEmpty)
               Column(
                 children: [
-                
+                  Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: TextField(
                       controller: controllerLogradouro,
@@ -149,8 +150,8 @@ class _MyHomePageState extends State<MyHomePage> {
                         labelText: "Logradouro",
                       ),
                     ),
-                
-                  
+                  ),
+                  Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: TextField(
                       controller: controllerLocalidade,
@@ -160,44 +161,18 @@ class _MyHomePageState extends State<MyHomePage> {
                         labelText: "Localidade",
                       ),
                     ),
-                 
-
-                  
+                  ),
+                  Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: TextField(
                       controller: controllerComplemento,
-                      keyboardType: TextInputType.number,
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(),
-                        labelText: "complemento",
-                      ),
+                      // ...other properties...
                     ),
-                  
-
-            
-                    padding: const EdgeInsets.all(8.0),
-                    child: TextField(
-                      controller: controllerUf,
-                      keyboardType: TextInputType.number,
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(),
-                        labelText: "uf",
-                      ),
-                    ),
-                  
-                
-                    padding: const EdgeInsets.all(8.0),
-                    child: TextField(
-                      controller: controllerEstado,
-                      keyboardType: TextInputType.number,
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(),
-                        labelText: "estado",
-                      ),
-                    ),
-                 
+                  ),
+                  // ...add more fields as needed...
                 ],
               ),
+            // ...existing code...
           ],
         ),
       ),
