@@ -56,5 +56,13 @@ class FirebaseService {
     }
 
   }
+  Future<void> update(String id, Map<String,dynamic> dados) async{
+    try {
+      await _firestore.collection(collectionName).doc(id).update(dados);
+    } catch (erro) {
+      throw Exception("ero ao atualizar dados: $erro");
+      
+    }
+  }
 
 }
