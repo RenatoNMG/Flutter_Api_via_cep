@@ -1,3 +1,4 @@
+import 'package:cosumodeapi/Pages/form_cadastro_usuario_page.dart';
 import 'package:cosumodeapi/Pages/home_page.dart';
 import 'package:flutter/material.dart';
 
@@ -15,7 +16,8 @@ class MyApp extends StatelessWidget {
         
       ),
       debugShowCheckedModeBanner: false,
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const FormCadastroUsuarioPage(),
     );
+    // MyHomePage(title: 'Flutter Demo Home Page')
   }
 }
