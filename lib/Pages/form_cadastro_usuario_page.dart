@@ -1,3 +1,5 @@
+import 'package:cosumodeapi/Models/user_model.dart';
+import 'package:cosumodeapi/Services/firebase_service.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
@@ -18,6 +20,48 @@ class _FormCadastroUsuarioPageState extends State<FormCadastroUsuarioPage> {
   TextEditingController confirmacaoController = TextEditingController();
 
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
+
+  final FirebaseService _firebaseService = FirebaseService(
+    collectionName: "usuarios",
+  );
+
+  Future<void> salvarUsuario() async {
+    if (!formKey.currentState!.validate()) {
+      return;
+    }
+
+    User usuario = User(
+      id: "",
+      nome: nomeController.text,
+      email: emailController.text,
+      telefone: telefoneController.text,
+      cpf: cpfController.text,
+      senha: senhaController.text,
+    );
+
+    try {
+      String idUser = await _firebaseService.create(usuario.toMap());
+      if (idUser.isNotEmpty) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            backgroundColor: Colors.green,
+            content: Column(
+              children: [
+                Text(
+                  "Sucesso $idUser",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                Text("Usuário cadastrado com sucesso"),
+              ],
+            ),
+          ),
+        );
+      }
+    } catch (erro) {}
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -51,6 +95,8 @@ class _FormCadastroUsuarioPageState extends State<FormCadastroUsuarioPage> {
                         final RegExp emailRegex = RegExp(
                           r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$',
                         );
+
+                        
                         if (!emailRegex.hasMatch(value!)) {
                           return "Email inválido";
                         }
@@ -119,10 +165,7 @@ class _FormCadastroUsuarioPageState extends State<FormCadastroUsuarioPage> {
                     ),
                     ElevatedButton(
                       onPressed: () {
-                        if (!formKey.currentState!.validate()) {
-                          return;
-                        }
-                        print("validade");
+                        salvarUsuario();
                       },
                       child: Text("Cadastrar"),
                     ),
