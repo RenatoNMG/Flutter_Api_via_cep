@@ -1,5 +1,3 @@
-import 'package:cosumodeapi/Pages/form_cadastro_usuario_page.dart';
-import 'package:cosumodeapi/Pages/home_page.dart';
 import 'package:cosumodeapi/Pages/list_users.dart';
 import 'package:flutter/material.dart';
 

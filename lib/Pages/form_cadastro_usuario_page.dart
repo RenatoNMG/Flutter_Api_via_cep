@@ -156,6 +156,7 @@ class _FormCadastroUsuarioPageState extends State<FormCadastroUsuarioPage> {
                         if (value != senhaController.text) {
                           return "a confirmação da senha esta incorreta";
                         }
+                        return null;
                       },
                       controller: confirmacaoController,
                       decoration: InputDecoration(
