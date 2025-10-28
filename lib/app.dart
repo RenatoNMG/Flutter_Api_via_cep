@@ -1,4 +1,6 @@
 import 'package:cosumodeapi/Pages/list_users.dart';
+import 'package:cosumodeapi/Pages/location_page.dart';
+import 'package:cosumodeapi/Pages/map_page.dart';
 import 'package:flutter/material.dart';
 
 class MyApp extends StatelessWidget {
@@ -10,12 +12,10 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-   
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        
       ),
       debugShowCheckedModeBanner: false,
-      home: ListUsers(),
+      home: MapPage(),
     );
     // MyHomePage(title: 'Flutter Demo Home Page')
   }

@@ -14,6 +14,8 @@ class _MyWidgetState extends State<ListUsers> {
   final FirebaseService _firebaseService = FirebaseService(
     collectionName: "usuarios",
   );
+
+  
   List<User> usuarios = [];
 
   Future<void> carregarUsers() async {
@@ -40,8 +42,37 @@ class _MyWidgetState extends State<ListUsers> {
     carregarUsers();
   }
 
+  Future<void> infoUser(String id) async {
+
+    try {
+      String idUser = (await _firebaseService.readById(id)) as String;
+      if (idUser.isNotEmpty) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            backgroundColor: Colors.green,
+            content: Column(
+              children: [
+                Text(
+                  "Sucesso",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                Text("Usuário cadastrado com sucesso"),
+              ],
+            ),
+          ),
+        );
+      }
+    } catch (erro) {}
+  }
+
+  
+
   @override
   Widget build(BuildContext context) {
+    
     return SafeArea(
       child: Scaffold(
         backgroundColor: const Color.fromARGB(255, 3, 165, 89),
@@ -65,7 +96,7 @@ class _MyWidgetState extends State<ListUsers> {
                         telefone: usuario.telefone,
                         cpf: usuario.cpf,
                       );
-                    }).toList(),
+                    }),
                   ],
                 ),
               ),

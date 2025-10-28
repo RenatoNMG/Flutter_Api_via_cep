@@ -1,6 +1,5 @@
 import 'package:cosumodeapi/Models/user_model.dart';
 import 'package:cosumodeapi/Services/firebase_service.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 class FormCadastroUsuarioPage extends StatefulWidget {
