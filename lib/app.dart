@@ -1,3 +1,4 @@
+import 'package:cosumodeapi/Pages/connectivity_page.dart';
 import 'package:cosumodeapi/Pages/map_page.dart';
 import 'package:flutter/material.dart';
 
@@ -13,7 +14,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
       debugShowCheckedModeBanner: false,
-      home: MapaPage(),
+      home: ConnectivityPage(),
     );
     // MyHomePage(title: 'Flutter Demo Home Page')
   }

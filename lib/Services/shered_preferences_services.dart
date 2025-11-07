@@ -8,11 +8,11 @@ class SheredPreferencesServices {
 
   static SharedPreferences? _preferences;
 
-  SheredPreferencesServices._();
+  SheredPreferencesServices();
 
   Future<SheredPreferencesServices> init() async {
     if (_instance == null) {
-      _instance = SheredPreferencesServices._();
+      _instance = SheredPreferencesServices();
 
       _preferences = await SharedPreferences.getInstance();
 
